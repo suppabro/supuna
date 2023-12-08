@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Editor</title>
+    <style>
+        #pdfContainer {
+            width: 100%;
+            height: 500px;
+            border: 1px solid #ccc;
+            position: relative;
+        }
+
+        #imageOverlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        #pdfInput, #imageInput {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <input type="file" id="pdfInput" accept=".pdf">
+    <input type="file" id="imageInput" accept="image/*">
+
+    <div id="pdfContainer">
+        <div id="imageOverlay">
+            <img id="addedImage" alt="Added Image">
+        </div>
+    </div>
+
+    <button onclick="generatePDF()">Generate PDF</button>
+
+    <script>
+        let pdfFile, imageFile;
+
+        document.getElementById('pdfInput').addEventListener('change', function (event) {
+            pdfFile = event.target.files[0];
+        });
+
+        document.getElementById('imageInput').addEventListener('change', function (event) {
+            const addedImage = document.getElementById('addedImage');
+            imageFile = event.target.files[0];
+
+            // Display the selected image on the overlay
+            addedImage.src = URL.createObjectURL(imageFile);
+            addedImage.style.width = '200px'; // Adjust the width as needed
+        });
+
+        function generatePDF() {
+            if (!pdfFile || !imageFile) {
+                alert('Please upload both PDF and image files.');
+                return;
+            }
+
+            // Perform PDF generation logic here
+            // You may use libraries like pdf-lib or pdfmake
+
+            // Example: For demonstration purposes, open the PDF in a new window
+            const pdfBlob = new Blob(['PDF Generation Logic Placeholder'], { type: 'application/pdf' });
+            const pdfUrl = URL.createObjectURL(pdfBlob);
+            window.open(pdfUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
